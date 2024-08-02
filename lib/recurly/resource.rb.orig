@@ -319,8 +319,9 @@ module Recurly
           raise NotFound, "can't find a record with nil identifier"
         end
 
+        uri = uuid =~ /^http/ ? uuid : member_path(uuid)
         begin
-          from_response API.get(member_path(uuid), {}, options)
+          from_response API.get(uri, {}, options)
         rescue API::NotFound => e
           raise NotFound, e.description
         end
